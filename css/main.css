@@ -1,41 +1,36 @@
-/* SELECIONA TODOS OS ELEMENTOS E COLOCA A BORDA */
-* {
-    /*border: 1px solid;
-    border: none;*/
-}
+
 html, body {
     border: none;
     margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
 }
-.clearfix{
+
+.clearfix {
     clear: both;
 }
 
-.header{
-
+/* ESTILIZACAO DO CABECALHO */
+.header .barra-topo {
+    background: #014a7f;
+    color: #ffffff;
+    padding: 10px;
 }
-    .header .barra-topo {
-        background: #014a7f;
-        color: #ffffff;
-        padding: 10px;
-    }
-    
-    div.header div.bem-vindo {
-        float: left;
-    }
 
-    .header .acoes-topo {
-        float: right;
-    }
-
-        .header .barra-topo .acoes-topo a {
-            color: white;
-            text-decoration: none;
-        }
-
-.logo{
+.header .bem-vindo {
     float: left;
+}
 
+.header .acoes-topo {
+    float: right;
+}
+
+.header .acoes-topo a {
+    color: white;
+    text-decoration: none;
+}
+
+.logo {
+    float: left;
 }
 
 .pesquisa {
@@ -44,12 +39,12 @@ html, body {
     /* margin-top: 30px; */
 }
 
-.menu{
+.menu {
     float: left;
     width: 30%;
 }
 
-.conteudo{
+.conteudo {
     float: right;
     width: 69%;
 }
@@ -57,8 +52,27 @@ html, body {
 .barra-topo-logo {
     background: #f70000 url(../img/bg_topo.jpg) top left no-repeat;
     height: 80px;
-    line-height:  80px;
+    line-height: 80px;
     vertical-align: middle;
     background-size: cover;
     box-shadow: 1px -1px 5px #777777;
+}
+
+/* ESTILIZACAO DA TABELA */
+
+table.data {
+    border: 1px solid #a0a0a0;
+    width: 100%;
+    border-spacing: 0;
+    line-height: 30px;
+}
+
+table.data thead {
+    background: #f1f1f1;
+    color: #404040;
+}
+
+table.data tbody td, table.data tfoot td {
+    padding: 15px;
+    border-bottom: 1px solid #ccc;
 }
