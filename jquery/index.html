@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/issues.js"></script>
+</head>
+<body>
+    Usuario <input type="text" id="user" value="freedomsponsors">
+    Repositório <input type="text" id="reponame" value="www.freedomsponsors.org">
+    <p>
+        <h5>ASYNC</h5>
+        <button onclick="buscarIssuesAsync()">Vai buscar as issues</button>
+        <button onclick="buscarIssuesAsyncInterval()">Vai buscar as issues no interval</button>
+    </p>
+    
+    <p>
+        <h5>SYNC</h5>
+        <button onclick="buscarIssuesSync()">Vai buscar as issues</button>
+    </p>
+
+    <table id="issuestable">
+        <tr><th>Numero</th><th>Titulo</th>
+    </table>
+</body>
+</html>
