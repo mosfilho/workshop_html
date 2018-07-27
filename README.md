@@ -16,7 +16,6 @@ Estrutura de pastas do projeto inicial
 ```
 ### Tips
 
-
 #### CSS
 
 ##### Links úteis
