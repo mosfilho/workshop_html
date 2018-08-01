@@ -41,7 +41,7 @@ JQuery AJAX: https://www.w3schools.com/jquery/jquery_ajax_get_post.asp
 
 Agora o bicho vai pegar!
 
-1. Crie um ambiente virtual com python3 dentro da pasta django e ative-o
+1. Crie um ambiente virtual com python3 dentro da pasta django e ative-o (todos os comandos abaixo é dentro da pasta django)
 2. Com o ambiente ativado, rode: 
     ```bash
     pip install --upgrade pip
@@ -77,6 +77,22 @@ Agora o bicho vai pegar!
 
 
 #### Tips
+Criar ambiente virtual
+```bash
+cd django # pasta utilizada somente para organizar o projeto
+python3 -m venv .workshop # cria ambiente virtual na pasta .workshop
+source .workshop/bin/activate # ativa ambiente virtual
+deactivate # desativa ambiente virtual
+```
+
+Gerenciar dependencias de projeto
+```bash
+cd django
+source .workshop/bin/activate # ativa ambiente virtual
+pip freeze # lista as libs utilizadas no projeto neste ambiente virtual
+pip freeze > requirements.txt # salva saída do 'pip freeze'
+```
+
 Rodar servidor na porta 8000
 ```bash
 cd django
