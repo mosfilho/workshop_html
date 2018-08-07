@@ -9,7 +9,7 @@ from django.db import models
 # Feel free to rename the models, but don't rename db_table values or field names.
 
 class Cliente(models.Model):
-    cd_regiao = models.DecimalField(max_digits=2, decimal_places=0)
+    cd_regiao = models.DecimalField(max_digits=2, decimal_places=0, verbose_name='Região')
     cd_cliente = models.DecimalField(max_digits=8, decimal_places=0)
     no_apelido = models.CharField(max_length=20)
     no_cliente = models.CharField(max_length=45, blank=True, null=True)
@@ -84,7 +84,7 @@ class Cliente(models.Model):
     tt_exc = models.SmallIntegerField(blank=True, null=True)
     tt_av = models.SmallIntegerField(blank=True, null=True)
     fl_conceito1 = models.CharField(max_length=3, blank=True, null=True)
-    cd_chave = models.CharField(primary_key=True, max_length=10)
+    cd_chave = models.CharField(primary_key=True, max_length=10, editable=False)
     cd_nomcod = models.CharField(max_length=53, blank=True, null=True)
     no_chvend = models.CharField(max_length=127, blank=True, null=True)
     no_endvirnr = models.CharField(max_length=9, blank=True, null=True)
@@ -102,3 +102,6 @@ class Cliente(models.Model):
     class Meta:
         managed = False
         db_table = 'cliente'
+
+    def __str__(self):
+        return '{} - {}'.format(self.cd_chave, self.no_cliente)
