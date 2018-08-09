@@ -105,3 +105,48 @@ class Cliente(models.Model):
 
     def __str__(self):
         return '{} - {}'.format(self.cd_chave, self.no_cliente)
+    
+    @property
+    def tem_documento(self):
+        return bool(self.documento_set.all())
+    
+    @property
+    def tem_telefone(self):
+        return bool(self.clientefone_set.all())
+    
+class Documento(models.Model):
+    cd_regiao = models.DecimalField(max_digits=2, decimal_places=0)
+    cd_cliente = models.DecimalField(max_digits=8, decimal_places=0)
+    cd_indicador = models.CharField(max_length=2)
+    tp_documento = models.CharField(max_length=2)
+    nr_documento = models.CharField(max_length=25, blank=True, null=True)
+    cd_chave = models.CharField(primary_key=True, max_length=12)
+    #cd_chave_cli = models.CharField(max_length=10, blank=True, null=True)
+    cd_chave_cli = models.ForeignKey(Cliente, blank=True, null=True, on_delete=models.SET_NULL, db_column='cd_chave_cli')
+    cd_chave_tpnr = models.CharField(max_length=27, blank=True, null=True)
+    id_origin = models.CharField(max_length=3, blank=True, null=True)
+    id_remote = models.CharField(max_length=3, blank=True, null=True)
+    dth_criacao = models.DateTimeField()
+    dth_atualizacao = models.DateTimeField()
+
+    class Meta:
+        managed = False
+        db_table = 'documento'
+
+
+class ClienteFone(models.Model):
+    cd_regiao = models.DecimalField(max_digits=2, decimal_places=0)
+    cd_cliente = models.DecimalField(max_digits=8, decimal_places=0, blank=True, null=True)
+    tp_fone = models.CharField(max_length=2, blank=True, null=True)
+    nr_telefone = models.CharField(max_length=13, blank=True, null=True)
+    cd_chave = models.CharField(primary_key=True, max_length=12)
+    cd_chave_cli = models.ForeignKey(Cliente, blank=True, null=True, on_delete=models.SET_NULL, db_column='cd_chave_cli')
+    id_origin = models.CharField(max_length=3, blank=True, null=True)
+    id_remote = models.CharField(max_length=3, blank=True, null=True)
+    dth_criacao = models.DateTimeField()
+    dth_atualizacao = models.DateTimeField()
+    fl_msg = models.CharField(max_length=3, blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'cliente_fone'
