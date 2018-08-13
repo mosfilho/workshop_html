@@ -150,3 +150,15 @@ class ClienteFone(models.Model):
     class Meta:
         managed = False
         db_table = 'cliente_fone'
+
+
+class Tablinha(models.Model):
+    cd_linha = models.DecimalField(primary_key=True, max_digits=4, decimal_places=0)
+    no_linha = models.CharField(max_length=25, blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'tablinha'
+
+    def __str__(self):
+        return self.no_linha

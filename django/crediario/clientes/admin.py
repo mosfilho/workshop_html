@@ -1,7 +1,7 @@
 from django.contrib import admin
 from crediario.admin import admin_site
 from crediario.clientes.models import Cliente, Documento, ClienteFone
-
+from crediario.clientes.forms import ClienteForm
 
 class DocumentoAdmin(admin.TabularInline):
     model = Documento
@@ -17,13 +17,14 @@ class ClienteAdmin(admin.ModelAdmin):
         DocumentoAdmin,
         ClienteFoneAdmin,
     ]
+    form = ClienteForm
     list_display = ('cd_chave','no_cliente','no_cidade','tem_documento','tem_telefone',)
     list_display_links = ('cd_chave', 'no_cliente',)
     search_fields = ('cd_nomcod','no_cidade',)
     readonly_fields = ('cd_chave',)
     fieldsets = (
         (None, {
-            'fields': ('cd_regiao', 'cd_cliente',)
+            'fields': ('cd_regiao', 'cd_cliente','cd_sexo','dt_nascimento',)
         }),
         ('Endereço', {
             'classes': ('collapse',),

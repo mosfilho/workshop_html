@@ -16,7 +16,10 @@ Including another URLconf
 #from django.contrib import admin
 from crediario.admin import admin_site
 from django.urls import path
+from crediario.clientes import views as clientes_views
+
 
 urlpatterns = [
     path('painel/', admin_site.urls),
+    path('cadastro-cliente/', clientes_views.vw_cadastro_cliente)
 ]
