@@ -21,5 +21,5 @@ from crediario.clientes import views as clientes_views
 
 urlpatterns = [
     path('painel/', admin_site.urls),
-    path('cadastro-cliente/', clientes_views.vw_cadastro_cliente)
+    path('clientes/', clientes_views.vw_clientes)
 ]

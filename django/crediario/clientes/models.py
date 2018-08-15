@@ -162,3 +162,21 @@ class Tablinha(models.Model):
 
     def __str__(self):
         return self.no_linha
+
+
+class Configloja(models.Model):
+    sg_loja = models.CharField(max_length=3)
+    cd_conf = models.CharField(max_length=4, blank=True, null=True)
+    no_conf = models.CharField(max_length=35, blank=True, null=True)
+    fl_conf = models.CharField(max_length=1, blank=True, null=True)
+    nr_confa = models.CharField(max_length=91, blank=True, null=True)
+    nr_confn = models.IntegerField(blank=True, null=True)
+    dt_inclusao = models.DateField(blank=True, null=True)
+    dt_encerra = models.DateField(blank=True, null=True)
+    dt_inativo = models.DateField(blank=True, null=True)
+    dt_inicio = models.DateField()
+    cd_chave = models.CharField(primary_key=True, max_length=7)
+
+    class Meta:
+        managed = False
+        db_table = 'configloja'

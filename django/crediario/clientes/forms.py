@@ -7,6 +7,13 @@ CHOICES_GENERO = (
     ('F','Feminino'),
 )
 
+class ClienteBuscaForm(forms.Form):
+    sg_loja = forms.CharField(max_length=3, disabled=True)
+    cd_regiao = forms.IntegerField(disabled=True)
+    cd_cliente = forms.DecimalField(max_digits=8, decimal_places=0, required=False)
+    no_cliente = forms.CharField(max_length=45, required=False)
+    
+
 class ClienteForm(forms.ModelForm):
     cd_sexo = forms.ChoiceField(choices=CHOICES_GENERO, label='Gênero')
     
