@@ -2,6 +2,7 @@ from django.shortcuts import render
 from crediario.clientes.models import Cliente, Configloja
 from crediario.clientes.forms import ClienteBuscaForm
 from django.contrib import messages
+from .api import APIConsultaCliente
 
 
 def vw_clientes(request):
@@ -25,6 +26,8 @@ def vw_clientes(request):
 
                 if not context['clientes']:
                     messages.add_message(request, messages.INFO, 'Cliente inexistente')
+                else:
+                    context['clientes_imagem'] = APIConsultaCliente(clientes[0])
 
 
     context['form'] = form
