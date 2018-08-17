@@ -12,6 +12,14 @@ class ClienteBuscaForm(forms.Form):
     cd_regiao = forms.IntegerField(disabled=True)
     cd_cliente = forms.DecimalField(max_digits=8, decimal_places=0, required=False)
     no_cliente = forms.CharField(max_length=45, required=False)
+
+    def clean(self):
+        cleaned_data = super().clean()
+
+        if 'cd_cliente' not in cleaned_data and cleaned_data['no_cliente'] == '':
+            raise forms.ValidationError("Informe ou o código ou o nome do cliente")
+
+        return cleaned_data
     
 
 class ClienteForm(forms.ModelForm):
