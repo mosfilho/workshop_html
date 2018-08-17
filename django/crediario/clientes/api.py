@@ -28,7 +28,7 @@ class APIConsultaCliente:
             'api' if self.conf.sg_loja == 'THE' else 'consulta/api',
             str(self.cliente.cd_cliente))
     
-    def get_imagem(self, codigo):
+    def get_imagem_url(self, codigo):
         """
         Retorna URL com a imagem do cliente
         """

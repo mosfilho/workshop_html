@@ -10,7 +10,7 @@ CHOICES_GENERO = (
 class ClienteBuscaForm(forms.Form):
     sg_loja = forms.CharField(max_length=3, disabled=True)
     cd_regiao = forms.IntegerField(disabled=True)
-    cd_cliente = forms.DecimalField(max_digits=8, decimal_places=0, required=False)
+    cd_cliente = forms.DecimalField(max_digits=8, decimal_places=0, required=False, initial=203114)
     no_cliente = forms.CharField(max_length=45, required=False)
 
     def clean(self):
