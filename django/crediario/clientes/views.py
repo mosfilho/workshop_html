@@ -17,17 +17,21 @@ def vw_clientes(request):
         form = ClienteBuscaForm(initial=data, data=request.POST)
 
         if form.is_valid():
+            
+            clientes = Cliente.objects.none()
+
             if form.cleaned_data['cd_cliente'] is not None:
                 cd_chave = '{0}{1}'.format(
                     str(form.cleaned_data['cd_regiao']).rjust(2),
                     str(form.cleaned_data['cd_cliente']).rjust(8))
                 clientes = Cliente.objects.filter(cd_chave = cd_chave)
-                context['clientes'] = clientes
+            else:
+                clientes = Cliente.objects.filter(cd_nomcod__istartswith=form.cleaned_data['no_cliente'])
 
-                if not context['clientes']:
-                    messages.add_message(request, messages.INFO, 'Cliente inexistente')
-                else:
-                    context['clientes_imagem'] = APIConsultaCliente(clientes[0])
+            context['clientes'] = clientes
+
+            if clientes.count() == 0:
+                messages.add_message(request, messages.INFO, 'Cliente inexistente')
 
 
     context['form'] = form

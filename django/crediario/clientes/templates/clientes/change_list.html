@@ -13,6 +13,28 @@
 </form>
 
 {% if clientes %}
-{{ clientes }}
-{{ clientes_imagem.get_imagens }}
+
+    <table>
+        <thead>
+            <th>Foto</th>
+            <th>Região</th>
+            <th>Código</th>
+            <th>Nome</th>
+        </thead>
+        <tbody>
+            {% for cliente in clientes %}
+            <tr>
+                <td>{{ cliente.cd_regiao }}</td>
+                <td>{{ cliente.cd_regiao }}</td>
+                <td>{{ cliente.cd_cliente }}</td>
+                <td>{{ cliente.no_cliente }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        <tfoot>
+            <td colspan="3">Total de Cliente(s): {{ clientes.count }}</td>
+        </tfoot>
+
+    </table>
+
 {% endif %}

@@ -16,7 +16,7 @@ class ClienteBuscaForm(forms.Form):
     def clean(self):
         cleaned_data = super().clean()
 
-        if 'cd_cliente' not in cleaned_data and cleaned_data['no_cliente'] == '':
+        if  cleaned_data['cd_cliente'] == None and cleaned_data['no_cliente'] == '':
             raise forms.ValidationError("Informe ou o código ou o nome do cliente")
 
         return cleaned_data
