@@ -1,14 +1,62 @@
 from django.db import models
 
-# This is an auto-generated Django model module.
-# You'll have to do the following manually to clean this up:
-#   * Rearrange models' order
-#   * Make sure each model has one field with primary_key=True
-#   * Make sure each ForeignKey has `on_delete` set to the desired behavior.
-#   * Remove `managed = False` lines if you wish to allow Django to create, modify, and delete the table
-# Feel free to rename the models, but don't rename db_table values or field names.
 
-class Cliente(models.Model):
+class APIConfigLoja:
+    """
+    API para facilitar o acesso a configloja de configuracao do banco de dados
+    """
+    def __init__(self):
+        conf = Configloja.objects.get(cd_chave='ZIM   1')
+        self.cd_regiao, self.sg_loja = conf.no_conf.split(':')[:2]
+        self.cd_regiao = int(self.cd_regiao)
+
+
+class APIConsultaCliente:
+    """
+    API para utilizar as imagens da aplicação 'CONSULTA'
+    """
+    def __init__(self):
+        if not isinstance(self, Cliente):
+            raise Exception('aceita somente objetos de Cliente')
+        self.conf = APIConfigLoja()
+
+    def get_imagens(self):
+        """
+        Retorna lista de imagens do cliente
+        """
+        return 'https://{}.claudinosa.com.br/{}/index/{}'.format(
+            'theconsulta' if self.conf.sg_loja == 'THE' else self.conf.sg_loja.lower(),
+            'api' if self.conf.sg_loja == 'THE' else 'consulta/api',
+            str(self.cd_cliente))
+    
+    def get_imagem_url(self, codigo):
+        """
+        Retorna URL com a imagem do cliente
+        """
+        return 'https://{}.claudinosa.com.br/{}/get_image/{}'.format(
+            'theconsulta' if self.conf.sg_loja == 'THE' else self.conf.sg_loja.lower(),
+            'api' if self.conf.sg_loja == 'THE' else 'consulta/api',
+            str(codigo))
+    
+    def get_foto(self):
+        """
+        Retornar a foto do cliente
+        """
+        import requests
+        id = None
+        response = requests.get(self.get_imagens())
+        data = response.json()
+        for row in data:
+            if row['FlFoto'] == '1':
+                id = row['Id']
+                break
+
+        if id is not None:
+            return self.get_imagem_url(id)
+            
+
+
+class Cliente(models.Model, APIConsultaCliente):
     cd_regiao = models.DecimalField(max_digits=2, decimal_places=0, verbose_name='Região')
     cd_cliente = models.DecimalField(max_digits=8, decimal_places=0)
     no_apelido = models.CharField(max_length=20)
@@ -113,6 +161,9 @@ class Cliente(models.Model):
     @property
     def tem_telefone(self):
         return bool(self.clientefone_set.all())
+
+    def get_foto_default(self):
+        return 'img/user.png'
     
 class Documento(models.Model):
     cd_regiao = models.DecimalField(max_digits=2, decimal_places=0)

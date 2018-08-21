@@ -2,7 +2,6 @@ from django.shortcuts import render
 from crediario.clientes.models import Cliente, Configloja
 from crediario.clientes.forms import ClienteBuscaForm
 from django.contrib import messages
-from .api import APIConsultaCliente
 
 
 def vw_clientes(request):

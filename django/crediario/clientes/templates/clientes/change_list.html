@@ -1,3 +1,4 @@
+{% load static %}
 {% if messages %}
 <ul class="messages">
     {% for message in messages %}
@@ -24,7 +25,7 @@
         <tbody>
             {% for cliente in clientes %}
             <tr>
-                <td>{{ cliente.cd_regiao }}</td>
+                <td><img src="{% static cliente.get_foto_default %}" style="width: 100px;"></td>
                 <td>{{ cliente.cd_regiao }}</td>
                 <td>{{ cliente.cd_cliente }}</td>
                 <td>{{ cliente.no_cliente }}</td>
