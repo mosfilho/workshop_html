@@ -11,21 +11,22 @@ def vw_clientes(request):
     data['cd_regiao'], data['sg_loja'] = conf.no_conf.split(':')[:2]
     data['cd_regiao'] = int(data['cd_regiao'])
     form = ClienteBuscaForm(initial=data)
-
+        
     if request.method == 'POST':
         form = ClienteBuscaForm(initial=data, data=request.POST)
 
         if form.is_valid():
-            
-            clientes = Cliente.objects.none()
 
-            if form.cleaned_data['cd_cliente'] is not None:
+            clientes = Cliente.objects.none()
+            print(form.cleaned_data)
+
+            if form.cleaned_data['tipo'] == '0': # buscar pelo código
                 cd_chave = '{0}{1}'.format(
                     str(form.cleaned_data['cd_regiao']).rjust(2),
-                    str(form.cleaned_data['cd_cliente']).rjust(8))
+                    form.cleaned_data['valor'].strip().rjust(8))
                 clientes = Cliente.objects.filter(cd_chave = cd_chave)
-            else:
-                clientes = Cliente.objects.filter(cd_nomcod__istartswith=form.cleaned_data['no_cliente'])
+            else: # buscar pelo nome
+                clientes = Cliente.objects.filter(cd_nomcod__istartswith=form.cleaned_data['valor'])
 
             context['clientes'] = clientes
 

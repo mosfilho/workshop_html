@@ -1,41 +1,128 @@
-{% load static %}
-{% if messages %}
-<ul class="messages">
-    {% for message in messages %}
-    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-    {% endfor %}
-</ul>
-{% endif %}
+<!DOCTYPE html>{% load static %}
+<html lang="pt-br">
 
-<form action="." method="post">
-    {% csrf_token %}
-    {{ form }}
-    <button type="submit">Buscar</button>
-</form>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Busca de Cliente</title>
+    <link rel="stylesheet" href="{% static 'bulma/bulma.min.css' %}">
+</head>
 
-{% if clientes %}
+<body>
 
-    <table>
-        <thead>
-            <th>Foto</th>
-            <th>Região</th>
-            <th>Código</th>
-            <th>Nome</th>
-        </thead>
-        <tbody>
-            {% for cliente in clientes %}
-            <tr>
-                <td><img src="{% static cliente.get_foto_default %}" style="width: 100px;"></td>
-                <td>{{ cliente.cd_regiao }}</td>
-                <td>{{ cliente.cd_cliente }}</td>
-                <td>{{ cliente.no_cliente }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-        <tfoot>
-            <td colspan="3">Total de Cliente(s): {{ clientes.count }}</td>
-        </tfoot>
+        <section class="hero">
+            <div class="hero-body">
+                <div class="container">
+                    <h1 class="title">
+                        Busca de Cliente
+                    </h1>
+                    <h2 class="subtitle">
+                        Busque o cliente pelo código ou pelo nome.
+                    </h2>
+                    <div class="columns">
 
-    </table>
+                        <div class="column">
 
-{% endif %}
+                            <form action="." method="post">
+                                {% csrf_token %}
+                                <div class="field is-grouped">
+            
+                                    <p class="control is-expanded">
+                                        <input class="input" type="text" placeholder="Loja" disabled name="sg_loja" id="id_sg_loja" {% if form.sg_loja.value %}value="{{form.sg_loja.value}}"{% endif %}>
+                                    </p>
+            
+                                    <p class="control is-expanded">
+                                        <input class="input" type="number" placeholder="Região" disabled name="cd_regiao" id="id_cd_regiao" {% if form.cd_regiao.value %}value="{{form.cd_regiao.value}}" {% endif %}>
+                                    </p>
+            
+            
+                                    <div class="field has-addons has-addons-right">
+                                        <p class="control">
+                                            <span class="select">
+                                                <select name="tipo" id="id_tipo">
+                                                    <option value=0 {% if form.tipo.value == 0 %}selected{% endif %}>Código</option>
+                                                    <option value=1 {% if form.tipo.value == 1 %}selected{% endif %}>Nome</option>
+                                                </select>
+                                            </span>
+                                        </p>
+                                        <p class="control">
+                                            <input class="input" type="text" placeholder="Pesquise Cliente" name="valor" id="id_valor" autofocus required  {% if form.valor.value %}value="{{ form.valor.value }}"{% endif %}>
+                                        </p>
+                                        <p class="control">
+                                            <button class="button is-primary" type="submit">
+                                                Buscar
+                                            </button>
+                                        </p>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                            
+                    </div>
+
+
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="columns">
+                                <div class="column">
+                                    <div class="notification is-warning">
+                                        <button class="delete"></button>
+                                        {{ message }}
+                                    </div></div>
+                            </div>                
+                        {% endfor %}
+                    {% endif %}
+
+
+                    {% if clientes %}
+
+                        <div class="columns">
+                            <div class="column">
+                                <small>
+                                {% if clientes.count == 1 %}
+                                    Foi encontrado um cliente.
+                                {% else %}
+                                    Foram econtrados {{ clientes.count }} clientes.
+                                {% endif %}
+                                </small>
+                            </div>
+                        </div>
+
+                        <div class="columns">
+                            <div class="column">
+                                <table class="table is-striped is-narrow is-hoverable is-fullwidth">
+                                    <thead>
+                                        <th>#</th>
+                                        <th>Foto</th>
+                                        <th>Código</th>
+                                        <th>Nome</th>
+                                    </thead>
+                                    <tbody>
+                                        {% for cliente in clientes %}
+                                        <tr>
+                                            <td>{{ forloop.counter }}</td>
+                                            <td>
+                                                <figure class="image is-48x48">
+                                                    <img class="is-rounded" src="{% static cliente.get_foto_default %}">
+                                                </figure>
+                                            </td>
+                                            <td>{{ cliente.cd_cliente }}</td>
+                                            <td>{{ cliente.no_cliente }}</td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                            
+                                </table>
+                            </div>
+                        </div>
+                    
+                    {% endif %}
+            
+                </div>
+            </div>
+        </section>
+
+</body>
+
+</html>

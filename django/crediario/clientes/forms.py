@@ -7,19 +7,26 @@ CHOICES_GENERO = (
     ('F','Feminino'),
 )
 
+CHOICES_TIPO_BUSCA_CLIENTE = (
+    (0, 'Código'),
+    (1, 'Nome'),
+)
+
 class ClienteBuscaForm(forms.Form):
     sg_loja = forms.CharField(max_length=3, disabled=True)
     cd_regiao = forms.IntegerField(disabled=True)
-    cd_cliente = forms.DecimalField(max_digits=8, decimal_places=0, required=False, initial=203114)
-    no_cliente = forms.CharField(max_length=45, required=False)
+    tipo = forms.ChoiceField(choices=CHOICES_TIPO_BUSCA_CLIENTE)
+    valor = forms.CharField(max_length=100, initial=203114)
+    #tipo = forms.ChoiceField(max_digits=8, decimal_places=0, required=False, initial=203114)
+    #no_cliente = forms.CharField(max_length=45, required=False)
 
-    def clean(self):
-        cleaned_data = super().clean()
+    # def clean(self):
+    #     cleaned_data = super().clean()
 
-        if  cleaned_data['cd_cliente'] == None and cleaned_data['no_cliente'] == '':
-            raise forms.ValidationError("Informe ou o código ou o nome do cliente")
+    #     if  cleaned_data['cd_cliente'] == None and cleaned_data['no_cliente'] == '':
+    #         raise forms.ValidationError("Informe ou o código ou o nome do cliente")
 
-        return cleaned_data
+    #     return cleaned_data
     
 
 class ClienteForm(forms.ModelForm):
