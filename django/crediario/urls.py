@@ -21,5 +21,6 @@ from crediario.clientes import views as clientes_views
 
 urlpatterns = [
     path('painel/', admin_site.urls),
-    path('clientes/', clientes_views.vw_clientes)
+    path('clientes/', clientes_views.vw_clientes),
+    path('api/clientes/<int:codigo>/imagem/', clientes_views.vw_api_imagem_cliente),
 ]

@@ -1,7 +1,9 @@
 from django.shortcuts import render
-from crediario.clientes.models import Cliente, Configloja
+from crediario.clientes.models import Cliente, Configloja, APIConfigLoja
 from crediario.clientes.forms import ClienteBuscaForm
 from django.contrib import messages
+from django.http import JsonResponse
+from django.conf import settings
 
 
 def vw_clientes(request):
@@ -40,3 +42,18 @@ def vw_clientes(request):
         'clientes/change_list.html',
         context
     )
+
+def vw_api_imagem_cliente(request, codigo):
+    conf = APIConfigLoja()
+    chave = '{0}{1}'.format(
+        str(conf.cd_regiao).rjust(2),
+        str(codigo).rjust(8))
+
+    cliente = Cliente.objects.filter(cd_chave=chave)
+
+    if cliente.count == 0:
+        return JsonResponse(settings.STATIC_URL+'img/user.png', safe=False)
+
+    imagem = cliente[0].get_foto()
+
+    return JsonResponse(imagem if imagem else settings.STATIC_URL+'img/user.png', safe=False)

@@ -8,8 +8,8 @@ CHOICES_GENERO = (
 )
 
 CHOICES_TIPO_BUSCA_CLIENTE = (
-    (0, 'Código'),
-    (1, 'Nome'),
+    ('0', 'Código'),
+    ('1', 'Nome'),
 )
 
 class ClienteBuscaForm(forms.Form):
@@ -17,16 +17,14 @@ class ClienteBuscaForm(forms.Form):
     cd_regiao = forms.IntegerField(disabled=True)
     tipo = forms.ChoiceField(choices=CHOICES_TIPO_BUSCA_CLIENTE)
     valor = forms.CharField(max_length=100, initial=203114)
-    #tipo = forms.ChoiceField(max_digits=8, decimal_places=0, required=False, initial=203114)
-    #no_cliente = forms.CharField(max_length=45, required=False)
 
-    # def clean(self):
-    #     cleaned_data = super().clean()
+    def clean(self):
+        cleaned_data = super().clean()
 
-    #     if  cleaned_data['cd_cliente'] == None and cleaned_data['no_cliente'] == '':
-    #         raise forms.ValidationError("Informe ou o código ou o nome do cliente")
+        if  cleaned_data['tipo'] == "0" and not cleaned_data['valor'].isdigit():
+            self.add_error("valor","Informe um código válido")
 
-    #     return cleaned_data
+        return cleaned_data
     
 
 class ClienteForm(forms.ModelForm):
