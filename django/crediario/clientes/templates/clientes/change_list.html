@@ -127,10 +127,10 @@
                                             <td>{{ forloop.counter }}</td>
                                             <td>
                                                 <figure class="image is-48x48">
-                                                    <img class="is-rounded">
+                                                    <img class="is-rounded imagem-cliente" src="{% static cliente.get_foto_default %}">
                                                 </figure>
                                             </td>
-                                            <td>{{ cliente.cd_cliente }}</td>
+                                            <td class="codigo-cliente" data-url="{% url 'api_cliente_imagem' cliente.cd_cliente %}">{{ cliente.cd_cliente }}</td>
                                             <td>{{ cliente.no_cliente }}</td>
                                         </tr>
                                         {% endfor %}
@@ -148,10 +148,27 @@
         <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
         <script>
 
-            /** Informa elemento que contém o código do cliente e rendenriza no callback */
+            /** Informa elemento que contém o código do cliente e rendenriza na imagem */
             function get_async_imagem_cliente (elemento) {
-                console.log(elemento)
+                var url = $(elemento).data('url');
+                var imagem = $('img.imagem-cliente',$(elemento).parent());
+                $.ajax({
+                    url: url,
+                    method: 'GET',
+                    success: function (response) {
+                        if (response.length > 0)
+                            imagem.attr('src', response);
+                    }
+                });
             }
+
+            $(document).ready(function(){
+
+                $.each($('td.codigo-cliente'), function(idx, elemento) {
+                    get_async_imagem_cliente(elemento)
+                });
+
+            });
             
         </script>
 

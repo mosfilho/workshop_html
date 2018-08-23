@@ -20,7 +20,6 @@ def vw_clientes(request):
         if form.is_valid():
 
             clientes = Cliente.objects.none()
-            print(form.cleaned_data)
 
             if form.cleaned_data['tipo'] == '0': # buscar pelo código
                 cd_chave = '{0}{1}'.format(
@@ -52,8 +51,8 @@ def vw_api_imagem_cliente(request, codigo):
     cliente = Cliente.objects.filter(cd_chave=chave)
 
     if cliente.count == 0:
-        return JsonResponse(settings.STATIC_URL+'img/user.png', safe=False)
+        return JsonResponse([], safe=False)
 
     imagem = cliente[0].get_foto()
 
-    return JsonResponse(imagem if imagem else settings.STATIC_URL+'img/user.png', safe=False)
+    return JsonResponse(imagem if imagem else [], safe=False)
