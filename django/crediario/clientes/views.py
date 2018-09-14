@@ -42,6 +42,7 @@ def vw_clientes(request):
         context
     )
 
+
 def vw_api_imagem_cliente(request, codigo):
     conf = APIConfigLoja()
     chave = '{0}{1}'.format(
@@ -56,3 +57,4 @@ def vw_api_imagem_cliente(request, codigo):
     imagem = cliente[0].get_foto()
 
     return JsonResponse(imagem if imagem else [], safe=False)
+    

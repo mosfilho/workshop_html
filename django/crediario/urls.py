@@ -15,11 +15,18 @@ Including another URLconf
 """
 #from django.contrib import admin
 from crediario.admin import admin_site
-from django.urls import path
+from django.urls import path, include
 from crediario.clientes import views as clientes_views
+from rest_framework import routers
+from crediario.clientes.serializers import ClienteViewSet
 
+
+# Routers provide an easy way of automatically determining the URL conf.
+router = routers.DefaultRouter()
+router.register(r'clientes', ClienteViewSet)
 
 urlpatterns = [
+    path('api/', include(router.urls)),
     path('painel/', admin_site.urls),
     path('clientes/', clientes_views.vw_clientes),
     path('api/clientes/<int:codigo>/imagem/', 

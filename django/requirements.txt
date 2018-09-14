@@ -4,3 +4,4 @@ django-decouple==2.1
 psycopg2==2.7.5
 pytz==2018.5
 requests==2.19.1
+djangorestframework==3.8.2
